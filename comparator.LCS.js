@@ -49,6 +49,38 @@ function lcsDP(s1, s2) {
   };
 }
 
+// ========== FUNÇÃO DE EXPORTAR PARA CSV ==========
+function exportCSV(results) {
+  const fs = require("fs");
+
+  const headers = [
+    "Caso",
+    "Tam_S1",
+    "Tam_S2",
+    "LCS",
+    "Recursivo_Tempo(ms)",
+    "Recursivo_Chamadas",
+    "DP_Tempo(ms)",
+    "DP_Iterações"
+  ];
+  const rows = results.map(r => [
+    r.name,
+    r.s1.length,
+    r.s2.length,
+    r.rec.result,
+    r.rec.time,
+    r.rec.calls,
+    r.dp.time,
+    r.dp.iterations
+  ]);
+  const csv = [headers, ...rows]
+    .map(row => row.join(","))
+    .join("\n");
+
+  fs.writeFileSync("comparativo-lcs.csv", csv);
+  console.log("📄 Arquivo 'comparativo-lcs.csv' gerado com sucesso!");
+}
+
 // ========== FUNÇÃO DE TESTE COMPARATIVO ==========
 function runTestCases() {
   const testCases = [
@@ -59,25 +91,32 @@ function runTestCases() {
     { name: "Muito Longo", s1: "abcde".repeat(5), s2: "edcba".repeat(5) }
   ];
 
+  let results = [];
+
   console.log(`\n📊 Comparativo entre implementações LCS\n`);
   console.log("| Caso          | Tam | LCS | Rec(ms) | Rec.Calls | DP(ms) | DP.Iters |");
   console.log("|---------------|-----|-----|---------|-----------|--------|----------|");
 
   for (let { name, s1, s2 } of testCases) {
-    let r = lcsRecursive(s1, s2);
-    let d = lcsDP(s1, s2);
-
+    let rec = lcsRecursive(s1, s2);
+    let dp = lcsDP(s1, s2);
     const tam = `${s1.length}x${s2.length}`;
+
     console.log(
-      `| ${name.padEnd(13)} | ${tam.padEnd(3)} | ${r.result
+      `| ${name.padEnd(13)} | ${tam.padEnd(3)} | ${rec.result
         .toString()
-        .padEnd(3)} | ${r.time.padEnd(7)} | ${r.calls
+        .padEnd(3)} | ${rec.time.padEnd(7)} | ${rec.calls
         .toString()
-        .padEnd(9)} | ${d.time.padEnd(6)} | ${d.iterations
+        .padEnd(9)} | ${dp.time.padEnd(6)} | ${dp.iterations
         .toString()
         .padEnd(8)} |`
     );
+
+    results.push({ name, s1, s2, rec, dp });
   }
+
+  exportCSV(results); // Aqui chama a exportação para CSV
 }
 
+// Rodando os testes
 runTestCases();

@@ -1,0 +1,6 @@
+Caso,Tam_S1,Tam_S2,LCS,Recursivo_Tempo(ms),Recursivo_Chamadas,DP_Tempo(ms),DP_Iterações
+Curto 1,5,3,3,0.09,15,0.21,15
+Curto 2,3,3,0,0.03,39,0.02,9
+Médio,6,7,4,0.10,1079,0.02,42
+Longo,14,14,3,64.53,1480757,0.04,196
+Muito Longo,25,25,9,35224.56,1502722809,0.14,625
