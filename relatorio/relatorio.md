@@ -1,6 +1,3 @@
-Claro! Aqui está um modelo de **relatório acadêmico em Markdown** com estrutura completa para seu trabalho sobre LCS com programação dinâmica. Ele segue um padrão que facilita a edição futura com textos, gráficos, exemplos, prints e análises:
-
-```markdown
 # 🧠 Projeto e Otimização de Algoritmos  
 ## Trabalho 1 – Programação Dinâmica
 
